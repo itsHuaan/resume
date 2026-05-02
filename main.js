@@ -3,7 +3,7 @@ const translations = {
         name: "Đỗ Quang Huân",
         title: "Backend Developer",
         initials: "ĐH",
-        image: "pf.jpg",
+        image: "./pf.jpg",
         labels: {
             contact: "Liên hệ",
             education: "Học vấn",
@@ -22,7 +22,7 @@ const translations = {
             {
                 time: "2020 – 2024",
                 school: "Đại học Kinh tế – Kỹ thuật Công nghiệp",
-                detail: "<strong>Ngành:</strong> Công nghệ Thông tin </br> <strong>GPA:</strong> 3.6 / 4.0"
+                detail: "Ngành: Công nghệ Thông tin </br> GPA: 3.6 / 4.0"
             }
         ],
         skills: [
@@ -37,10 +37,6 @@ const translations = {
             {
                 category: "Công cụ",
                 items: ["Git", "Linux"]
-            },
-            {
-                category: "Kỹ năng mềm",
-                items: ["Phân tích vấn đề", "Làm việc nhóm", "Tự học nhanh"]
             },
             {
                 category: "Ngoại ngữ",
@@ -60,7 +56,7 @@ const translations = {
                             "Xây dựng hệ thống xác thực & phân quyền cho người dùng và services, kiểm soát truy cập an toàn.",
                             "Điều phối dữ liệu từ các hệ thống khác, tối ưu hóa API để thực hiện các nghiệp vụ.",
                             "Tiếp nhận, phát triển tính năng theo yêu cầu.",
-                            "Phối hợp tester, nghiệp vụ rà soát log, xử lý edge case, duy trì tỷ lệ lỗi ở mức thấp nhất."
+                            "Phối hợp tester, nghiệp vụ rà soát log, xử lý edge case."
                         ],
                         tech: "Spring WebFlux · Redis · MariaDB"
                     },
@@ -82,13 +78,13 @@ const translations = {
                 role: "Thực tập sinh Phát triển Backend",
                 projects: [
                     {
-                        name: "",
+                        name: "Backend Development",
                         desc: "",
                         tasks: [
                             "Phát triển và triển khai các API backend sử dụng Java và Spring Boot.",
                             "Thực hiện các tính năng bảo mật với Spring Security.",
                             "Thiết kế và tối ưu hóa cơ sở dữ liệu để nâng cao hiệu suất hệ thống.",
-                            "Triển khai Redis để cache dữ liệu thường xuyên truy xuất và tích hợp WebSocket cho các tính năng realtime."
+                            "Triển khai Redis cache và WebSocket realtime."
                         ],
                         tech: "Spring Boot · Spring Security · Redis · WebSocket"
                     }
@@ -100,26 +96,26 @@ const translations = {
         name: "Do Quang Huan",
         title: "Backend Developer",
         initials: "DH",
-        image: "pf.jpg",
+        image: "./pf.jpg",
         labels: {
             contact: "Contact",
             education: "Education",
             skills: "Skills",
-            summary: "Professional Summary",
+            summary: "About Me",
             experience: "Work Experience"
         },
         contact: [
             { icon: "fa-envelope", text: "doquanghuan1909@gmail.com" },
             { icon: "fa-phone", text: "0338 836 098" },
             { icon: "fa-birthday-cake", text: "19/09/2001" },
-            { icon: "fa-map-marker-alt", text: "Hong Van, Thuong Tin, Hanoi" }
+            { icon: "fa-map-marker-alt", text: "Hanoi, Vietnam" }
         ],
-        summary: "Backend Developer specializing in the Java ecosystem (Spring Boot / WebFlux). Experienced in developing Microservices systems, focusing on optimizing API performance and asynchronous processing with Message Queue, Caching (Redis). Proficient in optimizing database queries and applying system security standards.",
+        summary: "Backend Developer specializing in the Java ecosystem (Spring Boot / WebFlux). Experienced in developing Microservices systems, focusing on optimizing API performance and asynchronous processing with Message Queue and Redis Caching. Proficient in database optimization and security standards.",
         education: [
             {
                 time: "2020 – 2024",
-                school: "University of Economic and Technical Industries",
-                detail: "<strong>Major:</strong> Information Technology </br> <strong>GPA:</strong> 3.6 / 4.0"
+                school: "Univ. of Economic and Technical Industries",
+                detail: "Major: Information Technology </br> GPA: 3.6 / 4.0"
             }
         ],
         skills: [
@@ -136,11 +132,7 @@ const translations = {
                 items: ["Git", "Linux"]
             },
             {
-                category: "Soft Skills",
-                items: ["Problem analysis", "Teamwork", "Fast self-learning"]
-            },
-            {
-                category: "Foreign Languages",
+                category: "Languages",
                 items: ["TOEIC 750"]
             }
         ],
@@ -152,12 +144,12 @@ const translations = {
                 projects: [
                     {
                         name: "Viettel MiniApp",
-                        desc: "Platform integrating various Viettel utility services as mini-apps.",
+                        desc: "Mini-app platform for Viettel utility services.",
                         tasks: [
-                            "Build authentication & authorization systems for users and services, ensuring secure access control.",
-                            "Coordinate data from other systems, optimize APIs to implement business logic.",
-                            "Receive and develop features according to requirements.",
-                            "Coordinate with testers and business analysts to review logs, handle edge cases, and maintain error rates at the lowest level."
+                            "Build auth & authz systems for users and services, ensuring secure access control.",
+                            "Coordinate data from external systems and optimize APIs.",
+                            "Develop features according to business requirements.",
+                            "Collaborate with QA to review logs and handle edge cases."
                         ],
                         tech: "Spring WebFlux · Redis · MariaDB"
                     },
@@ -165,9 +157,9 @@ const translations = {
                         name: "Viettel++",
                         desc: "Customer care and loyalty points system.",
                         tasks: [
-                            "Take over system maintenance, proactively refactor modules to minimize non-optimized code segments.",
-                            "Develop core business flows for loyalty points accumulation/redemption programs.",
-                            "Build new features according to requirements."
+                            "Maintain and refactor modules to improve code quality.",
+                            "Develop core business logic for loyalty programs.",
+                            "Implement new features as requested."
                         ],
                         tech: "Spring Boot · Kafka · MariaDB · Redis"
                     }
@@ -179,13 +171,13 @@ const translations = {
                 role: "Backend Development Intern",
                 projects: [
                     {
-                        name: "",
+                        name: "Backend Development",
                         desc: "",
                         tasks: [
                             "Develop and deploy backend APIs using Java and Spring Boot.",
                             "Implement security features with Spring Security.",
-                            "Design and optimize databases to enhance system performance.",
-                            "Deploy Redis to cache frequently accessed data and integrate WebSocket for real-time features."
+                            "Design and optimize databases for performance.",
+                            "Utilize Redis for caching and WebSocket for real-time features."
                         ],
                         tech: "Spring Boot · Spring Security · Redis · WebSocket"
                     }
@@ -199,10 +191,12 @@ let currentLang = 'vi';
 
 // ── RENDER SIDEBAR ──
 function renderSidebar(data) {
-    const imgTag = `<img src="${data.image}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-placeholder\\'>${data.initials}</div>'">`;
+    const imgTag = `<img src="${data.image}" class="profile-img" alt="Profile" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`;
+    const fallbackAvatar = `<div class="avatar-placeholder" style="display:none;">${data.initials}</div>`;
+    const avatar = `<div class="avatar-wrapper">${imgTag}${fallbackAvatar}</div>`;
 
-    const contacts = data.contact.map((c, i) => `
-    <div class="contact-item" style="animation-delay:${i * 0.08}s">
+    const contacts = data.contact.map(c => `
+    <div class="contact-item">
       <div class="contact-icon"><i class="fas ${c.icon}"></i></div>
       <span>${c.text}</span>
     </div>`).join('');
@@ -216,24 +210,27 @@ function renderSidebar(data) {
 
     const skills = data.skills.map(s => `
     <div class="skill-group">
-      <div class="skill-category">${s.category}</div>
+      <span class="skill-category">${s.category}</span>
       <div class="skill-tags">${s.items.map(i => `<span class="skill-tag">${i}</span>`).join('')}</div>
     </div>`).join('');
 
     document.getElementById('sidebar').innerHTML = `
     <div class="profile-block">
-      <div class="avatar-ring">${imgTag}</div>
+      ${avatar}
       <div class="profile-name">${data.name}</div>
       <div class="profile-title">${data.title}</div>
     </div>
+    
     <div class="sidebar-section">
       <div class="sidebar-heading">${data.labels.contact}</div>
       ${contacts}
     </div>
+    
     <div class="sidebar-section">
       <div class="sidebar-heading">${data.labels.education}</div>
       ${educations}
     </div>
+
     <div class="sidebar-section">
       <div class="sidebar-heading">${data.labels.skills}</div>
       ${skills}
@@ -252,9 +249,8 @@ function renderMain(data) {
       ${p.tech ? `<div class="tech-badge">${p.tech}</div>` : ''}
     </div>`).join('');
 
-    const experience = data.experience.map((e, i) => `
-    <div class="exp-item" style="animation-delay:${i * 0.12}s">
-      <div class="exp-dot"></div>
+    const experience = data.experience.map((e) => `
+    <div class="exp-item">
       <div class="exp-header">
         <div class="exp-company">${e.company}</div>
         <div class="exp-time">${e.time}</div>
@@ -266,15 +262,16 @@ function renderMain(data) {
     document.getElementById('main').innerHTML = `
     <div class="section">
       <div class="section-header">
-        <div class="section-icon"><i class="fas fa-user-tie fa-xs"></i></div>
+        <div class="section-icon"><i class="fas fa-user-tie"></i></div>
         <div class="section-title">${data.labels.summary}</div>
         <div class="section-rule"></div>
       </div>
       <p class="summary-text">${data.summary}</p>
     </div>
+    
     <div class="section">
       <div class="section-header">
-        <div class="section-icon"><i class="fas fa-briefcase fa-xs"></i></div>
+        <div class="section-icon"><i class="fas fa-briefcase"></i></div>
         <div class="section-title">${data.labels.experience}</div>
         <div class="section-rule"></div>
       </div>
@@ -286,23 +283,17 @@ function updateCV(lang) {
     currentLang = lang;
     const data = translations[lang];
     
-    // Update active button state
     document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`btn-${lang}`).classList.add('active');
     
-    // Update HTML lang attribute
     document.documentElement.lang = lang;
-    
-    // Update Document Title
     document.title = lang === 'vi' ? `CV - ${data.name}` : `Resume - ${data.name}`;
     
     renderSidebar(data);
     renderMain(data);
 }
 
-// Event Listeners
 document.getElementById('btn-vi').addEventListener('click', () => updateCV('vi'));
 document.getElementById('btn-en').addEventListener('click', () => updateCV('en'));
 
-// Initial render
 updateCV('vi');
