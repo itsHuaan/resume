@@ -1,96 +1,204 @@
-const data = {
-    name: "Đỗ Quang Huân",
-    title: "Backend Developer",
-    initials: "ĐH",
-    image: "pf.jpg",
-    contact: [
-        { icon: "fa-envelope", text: "doquanghuan1909@gmail.com" },
-        { icon: "fa-phone", text: "0338 836 098" },
-        { icon: "fa-birthday-cake", text: "19/09/2001" },
-        { icon: "fa-map-marker-alt", text: "Hồng Vân, Thường Tín, Hà Nội" }
-    ],
-    summary: "Backend Developer chuyên hệ sinh thái Java (Spring Boot / WebFlux). Có kinh nghiệm thực chiến phát triển hệ thống Microservices, tập trung tối ưu hiệu năng API và xử lý bất đồng bộ với Message Queue, Caching (Redis). Nắm vững khả năng tối ưu truy vấn database và áp dụng các tiêu chuẩn bảo mật hệ thống.",
-    education: [
-        {
-            time: "2020 – 2024",
-            school: "Đại học Kinh tế – Kỹ thuật Công nghiệp",
-            detail: "<strong>Ngành:</strong> Công nghệ Thông tin </br> <strong>GPA:</strong> 3.6 / 4.0"
-        }
-    ],
-    skills: [
-        {
-            category: "Ngôn ngữ & Framework",
-            items: ["Java", "SQL", "Spring Boot", "Spring WebFlux"]
+const translations = {
+    vi: {
+        name: "Đỗ Quang Huân",
+        title: "Backend Developer",
+        initials: "ĐH",
+        image: "pf.jpg",
+        labels: {
+            contact: "Liên hệ",
+            education: "Học vấn",
+            skills: "Kỹ năng",
+            summary: "Tóm tắt chuyên môn",
+            experience: "Kinh nghiệm làm việc"
         },
-        {
-            category: "Hạ tầng & Dịch vụ",
-            items: ["Microservices", "Apache Kafka", "Redis", "MariaDB"]
+        contact: [
+            { icon: "fa-envelope", text: "doquanghuan1909@gmail.com" },
+            { icon: "fa-phone", text: "0338 836 098" },
+            { icon: "fa-birthday-cake", text: "19/09/2001" },
+            { icon: "fa-map-marker-alt", text: "Hồng Vân, Thường Tín, Hà Nội" }
+        ],
+        summary: "Backend Developer chuyên hệ sinh thái Java (Spring Boot / WebFlux). Có kinh nghiệm thực chiến phát triển hệ thống Microservices, tập trung tối ưu hiệu năng API và xử lý bất đồng bộ với Message Queue, Caching (Redis). Nắm vững khả năng tối ưu truy vấn database và áp dụng các tiêu chuẩn bảo mật hệ thống.",
+        education: [
+            {
+                time: "2020 – 2024",
+                school: "Đại học Kinh tế – Kỹ thuật Công nghiệp",
+                detail: "<strong>Ngành:</strong> Công nghệ Thông tin </br> <strong>GPA:</strong> 3.6 / 4.0"
+            }
+        ],
+        skills: [
+            {
+                category: "Ngôn ngữ & Framework",
+                items: ["Java", "SQL", "Spring Boot", "Spring WebFlux"]
+            },
+            {
+                category: "Hạ tầng & Dịch vụ",
+                items: ["Microservices", "Apache Kafka", "Redis", "MariaDB"]
+            },
+            {
+                category: "Công cụ",
+                items: ["Git", "Linux"]
+            },
+            {
+                category: "Kỹ năng mềm",
+                items: ["Phân tích vấn đề", "Làm việc nhóm", "Tự học nhanh"]
+            },
+            {
+                category: "Ngoại ngữ",
+                items: ["TOEIC 750"]
+            }
+        ],
+        experience: [
+            {
+                time: "03/2025 – Hiện tại",
+                company: "VIETTEL TELECOM",
+                role: "Kỹ sư Phát triển Phần mềm",
+                projects: [
+                    {
+                        name: "Viettel MiniApp",
+                        desc: "Nền tảng tích hợp nhiều dịch vụ tiện ích của Viettel dưới dạng mini-app.",
+                        tasks: [
+                            "Xây dựng hệ thống xác thực & phân quyền cho người dùng và services, kiểm soát truy cập an toàn.",
+                            "Điều phối dữ liệu từ các hệ thống khác, tối ưu hóa API để thực hiện các nghiệp vụ.",
+                            "Tiếp nhận, phát triển tính năng theo yêu cầu.",
+                            "Phối hợp tester, nghiệp vụ rà soát log, xử lý edge case, duy trì tỷ lệ lỗi ở mức thấp nhất."
+                        ],
+                        tech: "Spring WebFlux · Redis · MariaDB"
+                    },
+                    {
+                        name: "Viettel++",
+                        desc: "Hệ thống chăm sóc khách hàng và tích điểm.",
+                        tasks: [
+                            "Tiếp nhận bảo trì hệ thống, chủ động refactor các module giảm thiểu các đoạn mã chưa tối ưu.",
+                            "Phát triển các luồng nghiệp vụ cốt lõi cho các chương trình tích điểm / tiêu điểm.",
+                            "Xây dựng các tính năng mới theo yêu cầu."
+                        ],
+                        tech: "Spring Boot · Kafka · MariaDB · Redis"
+                    }
+                ]
+            },
+            {
+                time: "08/2024 – 02/2025",
+                company: "CY VIỆT NAM",
+                role: "Thực tập sinh Phát triển Backend",
+                projects: [
+                    {
+                        name: "",
+                        desc: "",
+                        tasks: [
+                            "Phát triển và triển khai các API backend sử dụng Java và Spring Boot.",
+                            "Thực hiện các tính năng bảo mật với Spring Security.",
+                            "Thiết kế và tối ưu hóa cơ sở dữ liệu để nâng cao hiệu suất hệ thống.",
+                            "Triển khai Redis để cache dữ liệu thường xuyên truy xuất và tích hợp WebSocket cho các tính năng realtime."
+                        ],
+                        tech: "Spring Boot · Spring Security · Redis · WebSocket"
+                    }
+                ]
+            }
+        ]
+    },
+    en: {
+        name: "Do Quang Huan",
+        title: "Backend Developer",
+        initials: "DH",
+        image: "pf.jpg",
+        labels: {
+            contact: "Contact",
+            education: "Education",
+            skills: "Skills",
+            summary: "Professional Summary",
+            experience: "Work Experience"
         },
-        {
-            category: "Công cụ",
-            items: ["Git", "Linux"]
-        },
-        {
-            category: "Kỹ năng mềm",
-            items: ["Phân tích vấn đề", "Làm việc nhóm", "Tự học nhanh"]
-        },
-        {
-            category: "Ngoại ngữ",
-            items: ["TOEIC 750"]
-        }
-    ],
-    experience: [
-        {
-            time: "03/2025 – Hiện tại",
-            company: "VIETTEL TELECOM",
-            role: "Kỹ sư Phát triển Phần mềm",
-            projects: [
-                {
-                    name: "Viettel MiniApp",
-                    desc: "Nền tảng tích hợp nhiều dịch vụ tiện ích của Viettel dưới dạng mini-app.",
-                    tasks: [
-                        "Xây dựng hệ thống xác thực & phân quyền cho người dùng và services, kiểm soát truy cập an toàn.",
-                        "Điều phối dữ liệu từ các hệ thống khác, tối ưu hóa API để thực hiện các nghiệp vụ.",
-                        "Tiếp nhận, phát triển tính năng theo yêu cầu.",
-                        "Phối hợp tester, nghiệp vụ rà soát log, xử lý edge case, duy trì tỷ lệ lỗi ở mức thấp nhất."
-                    ],
-                    tech: "Spring WebFlux · Redis · MariaDB"
-                },
-                {
-                    name: "Viettel++",
-                    desc: "Hệ thống chăm sóc khách hàng và tích điểm.",
-                    tasks: [
-                        "Tiếp nhận bảo trì hệ thống, chủ động refactor các module giảm thiểu các đoạn mã chưa tối ưu.",
-                        "Phát triển các luồng nghiệp vụ cốt lõi cho các chương trình tích điểm / tiêu điểm.",
-                        "Xây dựng các tính năng mới theo yêu cầu."
-                    ],
-                    tech: "Spring Boot · Kafka · MariaDB · Redis"
-                }
-            ]
-        },
-        {
-            time: "08/2024 – 02/2025",
-            company: "CY VIỆT NAM",
-            role: "Thực tập sinh Phát triển Backend",
-            projects: [
-                {
-                    name: "",
-                    desc: "",
-                    tasks: [
-                        "Phát triển và triển khai các API backend sử dụng Java và Spring Boot.",
-                        "Thực hiện các tính năng bảo mật với Spring Security.",
-                        "Thiết kế và tối ưu hóa cơ sở dữ liệu để nâng cao hiệu suất hệ thống.",
-                        "Triển khai Redis để cache dữ liệu thường xuyên truy xuất và tích hợp WebSocket cho các tính năng realtime."
-                    ],
-                    tech: "Spring Boot · Spring Security · Redis · WebSocket"
-                }
-            ]
-        }
-    ]
+        contact: [
+            { icon: "fa-envelope", text: "doquanghuan1909@gmail.com" },
+            { icon: "fa-phone", text: "0338 836 098" },
+            { icon: "fa-birthday-cake", text: "19/09/2001" },
+            { icon: "fa-map-marker-alt", text: "Hong Van, Thuong Tin, Hanoi" }
+        ],
+        summary: "Backend Developer specializing in the Java ecosystem (Spring Boot / WebFlux). Experienced in developing Microservices systems, focusing on optimizing API performance and asynchronous processing with Message Queue, Caching (Redis). Proficient in optimizing database queries and applying system security standards.",
+        education: [
+            {
+                time: "2020 – 2024",
+                school: "University of Economic and Technical Industries",
+                detail: "<strong>Major:</strong> Information Technology </br> <strong>GPA:</strong> 3.6 / 4.0"
+            }
+        ],
+        skills: [
+            {
+                category: "Languages & Frameworks",
+                items: ["Java", "SQL", "Spring Boot", "Spring WebFlux"]
+            },
+            {
+                category: "Infrastructure & Services",
+                items: ["Microservices", "Apache Kafka", "Redis", "MariaDB"]
+            },
+            {
+                category: "Tools",
+                items: ["Git", "Linux"]
+            },
+            {
+                category: "Soft Skills",
+                items: ["Problem analysis", "Teamwork", "Fast self-learning"]
+            },
+            {
+                category: "Foreign Languages",
+                items: ["TOEIC 750"]
+            }
+        ],
+        experience: [
+            {
+                time: "03/2025 – Present",
+                company: "VIETTEL TELECOM",
+                role: "Software Development Engineer",
+                projects: [
+                    {
+                        name: "Viettel MiniApp",
+                        desc: "Platform integrating various Viettel utility services as mini-apps.",
+                        tasks: [
+                            "Build authentication & authorization systems for users and services, ensuring secure access control.",
+                            "Coordinate data from other systems, optimize APIs to implement business logic.",
+                            "Receive and develop features according to requirements.",
+                            "Coordinate with testers and business analysts to review logs, handle edge cases, and maintain error rates at the lowest level."
+                        ],
+                        tech: "Spring WebFlux · Redis · MariaDB"
+                    },
+                    {
+                        name: "Viettel++",
+                        desc: "Customer care and loyalty points system.",
+                        tasks: [
+                            "Take over system maintenance, proactively refactor modules to minimize non-optimized code segments.",
+                            "Develop core business flows for loyalty points accumulation/redemption programs.",
+                            "Build new features according to requirements."
+                        ],
+                        tech: "Spring Boot · Kafka · MariaDB · Redis"
+                    }
+                ]
+            },
+            {
+                time: "08/2024 – 02/2025",
+                company: "CY VIETNAM",
+                role: "Backend Development Intern",
+                projects: [
+                    {
+                        name: "",
+                        desc: "",
+                        tasks: [
+                            "Develop and deploy backend APIs using Java and Spring Boot.",
+                            "Implement security features with Spring Security.",
+                            "Design and optimize databases to enhance system performance.",
+                            "Deploy Redis to cache frequently accessed data and integrate WebSocket for real-time features."
+                        ],
+                        tech: "Spring Boot · Spring Security · Redis · WebSocket"
+                    }
+                ]
+            }
+        ]
+    }
 };
 
+let currentLang = 'vi';
+
 // ── RENDER SIDEBAR ──
-function renderSidebar() {
+function renderSidebar(data) {
     const imgTag = `<img src="${data.image}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-placeholder\\'>${data.initials}</div>'">`;
 
     const contacts = data.contact.map((c, i) => `
@@ -119,21 +227,21 @@ function renderSidebar() {
       <div class="profile-title">${data.title}</div>
     </div>
     <div class="sidebar-section">
-      <div class="sidebar-heading">Liên hệ</div>
+      <div class="sidebar-heading">${data.labels.contact}</div>
       ${contacts}
     </div>
     <div class="sidebar-section">
-      <div class="sidebar-heading">Học vấn</div>
+      <div class="sidebar-heading">${data.labels.education}</div>
       ${educations}
     </div>
     <div class="sidebar-section">
-      <div class="sidebar-heading">Kỹ năng</div>
+      <div class="sidebar-heading">${data.labels.skills}</div>
       ${skills}
     </div>`;
 }
 
 // ── RENDER MAIN ──
-function renderMain() {
+function renderMain(data) {
     const projects = (list) => list.map(p => `
     <div class="project-card">
       ${p.name ? `<div class="project-name">${p.name}</div>` : ''}
@@ -159,7 +267,7 @@ function renderMain() {
     <div class="section">
       <div class="section-header">
         <div class="section-icon"><i class="fas fa-user-tie fa-xs"></i></div>
-        <div class="section-title">Tóm tắt chuyên môn</div>
+        <div class="section-title">${data.labels.summary}</div>
         <div class="section-rule"></div>
       </div>
       <p class="summary-text">${data.summary}</p>
@@ -167,12 +275,34 @@ function renderMain() {
     <div class="section">
       <div class="section-header">
         <div class="section-icon"><i class="fas fa-briefcase fa-xs"></i></div>
-        <div class="section-title">Kinh nghiệm làm việc</div>
+        <div class="section-title">${data.labels.experience}</div>
         <div class="section-rule"></div>
       </div>
       ${experience}
     </div>`;
 }
 
-renderSidebar();
-renderMain();
+function updateCV(lang) {
+    currentLang = lang;
+    const data = translations[lang];
+    
+    // Update active button state
+    document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`btn-${lang}`).classList.add('active');
+    
+    // Update HTML lang attribute
+    document.documentElement.lang = lang;
+    
+    // Update Document Title
+    document.title = lang === 'vi' ? `CV - ${data.name}` : `Resume - ${data.name}`;
+    
+    renderSidebar(data);
+    renderMain(data);
+}
+
+// Event Listeners
+document.getElementById('btn-vi').addEventListener('click', () => updateCV('vi'));
+document.getElementById('btn-en').addEventListener('click', () => updateCV('en'));
+
+// Initial render
+updateCV('vi');
