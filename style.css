@@ -32,6 +32,20 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     border-radius: 8px;
     overflow: hidden;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.cv-wrapper.switching {
+    opacity: 0;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(15px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.fade-in {
+    animation: slideUp 0.4s ease-out forwards;
 }
 
 /* ── LANGUAGE SWITCHER ── */
@@ -79,8 +93,8 @@ body {
 }
 
 .avatar-wrapper {
-    width: 120px;
-    height: 120px;
+    width: 190px;
+    height: 190px;
     margin: 0 auto 25px;
     position: relative;
     border: 3px solid white;

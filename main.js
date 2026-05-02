@@ -3,7 +3,7 @@ const translations = {
         name: "Đỗ Quang Huân",
         title: "Backend Developer",
         initials: "ĐH",
-        image: "./pf.jpg",
+        image: "pf.jpg",
         labels: {
             contact: "Liên hệ",
             education: "Học vấn",
@@ -96,7 +96,7 @@ const translations = {
         name: "Do Quang Huan",
         title: "Backend Developer",
         initials: "DH",
-        image: "./pf.jpg",
+        image: "pf.jpg",
         labels: {
             contact: "Contact",
             education: "Education",
@@ -114,7 +114,7 @@ const translations = {
         education: [
             {
                 time: "2020 – 2024",
-                school: "Univ. of Economic and Technical Industries",
+                school: "Univ. of Economic and Technology for Industries",
                 detail: "Major: Information Technology </br> GPA: 3.6 / 4.0"
             }
         ],
@@ -280,6 +280,29 @@ function renderMain(data) {
 }
 
 function updateCV(lang) {
+    const wrapper = document.querySelector('.cv-wrapper');
+    const isFirstLoad = !document.getElementById('sidebar').innerHTML.trim();
+    
+    if (!isFirstLoad && currentLang === lang) return;
+    
+    if (isFirstLoad) {
+        renderContent(lang, false);
+    } else {
+        wrapper.classList.add('switching');
+        // Wait for the fade-out to complete (matching CSS transition time)
+        setTimeout(() => {
+            renderContent(lang, true);
+            // Ensure DOM updates and paints before fading back in
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    wrapper.classList.remove('switching');
+                });
+            });
+        }, 300); 
+    }
+}
+
+function renderContent(lang, animateSections) {
     currentLang = lang;
     const data = translations[lang];
     
@@ -291,6 +314,13 @@ function updateCV(lang) {
     
     renderSidebar(data);
     renderMain(data);
+    
+    if (animateSections) {
+        document.querySelectorAll('.section, .sidebar-section, .profile-block').forEach((el, i) => {
+            el.style.animationDelay = `${i * 0.05}s`;
+            el.classList.add('fade-in');
+        });
+    }
 }
 
 document.getElementById('btn-vi').addEventListener('click', () => updateCV('vi'));
