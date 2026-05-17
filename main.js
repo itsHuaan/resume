@@ -8,30 +8,30 @@ function renderSidebar(data) {
     const fallbackAvatar = `<div class="avatar-placeholder" style="display:none;">${data.initials}</div>`;
     const avatar = `<div class="avatar-wrapper">${imgTag}${fallbackAvatar}</div>`;
 
-    const contacts = data.contact.map(c => `
+    const contacts = data.contact.map((c, i) => `
     <div class="contact-item">
       <div class="contact-icon"><i class="fas ${c.icon}"></i></div>
-      <span>${c.text}</span>
+      <span data-path="contact.${i}.text">${c.text}</span>
     </div>`).join('');
 
-    const educations = data.education.map(e => `
+    const educations = data.education.map((e, i) => `
     <div class="edu-item">
-      <div class="edu-time">${e.time}</div>
-      <div class="edu-school">${e.school}</div>
-      <div class="edu-detail">${e.detail}</div>
+      <div class="edu-time" data-path="education.${i}.time">${e.time}</div>
+      <div class="edu-school" data-path="education.${i}.school">${e.school}</div>
+      <div class="edu-detail" data-path="education.${i}.detail">${e.detail}</div>
     </div>`).join('');
 
-    const skills = data.skills.map(s => `
+    const skills = data.skills.map((s, i) => `
     <div class="skill-group">
-      <span class="skill-category">${s.category}</span>
-      <div class="skill-tags">${s.items.map(i => `<span class="skill-tag">${i}</span>`).join('')}</div>
+      <span class="skill-category" data-path="skills.${i}.category">${s.category}</span>
+      <div class="skill-tags">${s.items.map((item, j) => `<span class="skill-tag" data-path="skills.${i}.items.${j}">${item}</span>`).join('')}</div>
     </div>`).join('');
 
     document.getElementById('sidebar').innerHTML = `
     <div class="profile-block">
       ${avatar}
-      <div class="profile-name">${data.name}</div>
-      <div class="profile-title">${data.title}</div>
+      <div class="profile-name" data-path="name">${data.name}</div>
+      <div class="profile-title" data-path="title">${data.title}</div>
     </div>
     
     <div class="sidebar-section">
@@ -52,24 +52,24 @@ function renderSidebar(data) {
 
 // ── RENDER MAIN ──
 function renderMain(data) {
-    const projects = (list) => list.map(p => `
+    const projects = (list, expIdx) => list.map((p, pIdx) => `
     <div class="project-card">
-      ${p.name ? `<div class="project-name">${p.name}</div>` : ''}
-      ${p.desc ? `<div class="project-desc">${p.desc}</div>` : ''}
+      ${p.name ? `<div class="project-name" data-path="experience.${expIdx}.projects.${pIdx}.name">${p.name}</div>` : ''}
+      ${p.desc ? `<div class="project-desc" data-path="experience.${expIdx}.projects.${pIdx}.desc">${p.desc}</div>` : ''}
       <ul class="task-list">
-        ${p.tasks.map(t => `<li>${t}</li>`).join('')}
+        ${p.tasks.map((t, tIdx) => `<li data-path="experience.${expIdx}.projects.${pIdx}.tasks.${tIdx}">${t}</li>`).join('')}
       </ul>
-      ${p.tech ? `<div class="tech-badge">${p.tech}</div>` : ''}
+      ${p.tech ? `<div class="tech-badge" data-path="experience.${expIdx}.projects.${pIdx}.tech">${p.tech}</div>` : ''}
     </div>`).join('');
 
-    const experience = data.experience.map((e) => `
+    const experience = data.experience.map((e, i) => `
     <div class="exp-item">
       <div class="exp-header">
-        <div class="exp-company">${e.company}</div>
-        <div class="exp-time">${e.time}</div>
+        <div class="exp-company" data-path="experience.${i}.company">${e.company}</div>
+        <div class="exp-time" data-path="experience.${i}.time">${e.time}</div>
       </div>
-      <div class="exp-role">${e.role}</div>
-      ${projects(e.projects)}
+      <div class="exp-role" data-path="experience.${i}.role">${e.role}</div>
+      ${projects(e.projects, i)}
     </div>`).join('');
 
     document.getElementById('main').innerHTML = `
@@ -79,7 +79,7 @@ function renderMain(data) {
         <div class="section-title">${data.labels.summary}</div>
         <div class="section-rule"></div>
       </div>
-      <p class="summary-text">${data.summary}</p>
+      <p class="summary-text" data-path="summary">${data.summary}</p>
     </div>
     
     <div class="section">
@@ -236,6 +236,144 @@ document.addEventListener('click', (e) => {
         controlsToggle.classList.remove('active');
         controlsMenu.classList.remove('show');
     }
+});
+
+// ── INLINE EDITOR LOGIC ──
+let isEditing = false;
+
+function setNestedValue(obj, path, value) {
+    const keys = path.split('.');
+    let current = obj;
+    for (let i = 0; i < keys.length - 1; i++) {
+        if (!current[keys[i]]) current[keys[i]] = isNaN(keys[i+1]) ? {} : [];
+        current = current[keys[i]];
+    }
+    current[keys[keys.length - 1]] = value;
+}
+
+function applyEditMode(enabled) {
+    isEditing = enabled;
+    const editableElements = document.querySelectorAll('[data-path]');
+    const editToggle = document.getElementById('edit-toggle');
+    const discardToggle = document.getElementById('discard-toggle');
+    const settingsToggle = document.getElementById('controls-toggle');
+    
+    if (enabled) {
+        document.body.classList.add('editing');
+        editToggle.classList.add('active');
+        editToggle.innerHTML = '<i class="fas fa-save"></i>';
+        discardToggle.style.display = "flex";
+        editableElements.forEach(el => el.contentEditable = "true");
+        // Disable settings to prevent data loss during edit
+        settingsToggle.style.opacity = "0.5";
+        settingsToggle.style.pointerEvents = "none";
+        controlsMenu.classList.remove('show');
+    } else {
+        document.body.classList.remove('editing');
+        editToggle.classList.remove('active');
+        editToggle.innerHTML = '<i class="fas fa-pencil-alt"></i>';
+        discardToggle.style.display = "none";
+        editableElements.forEach(el => el.contentEditable = "false");
+        settingsToggle.style.opacity = "1";
+        settingsToggle.style.pointerEvents = "auto";
+    }
+}
+
+document.getElementById('discard-toggle').addEventListener('click', () => {
+    if (confirm('Discard all unsaved changes?')) {
+        applyEditMode(false);
+        renderContent(currentLang, false); // Re-render from original data
+    }
+});
+
+async function saveToGitHub(pat) {
+    const repoOwner = 'itsHuaan';
+    const repoName = 'resume';
+    const filePath = 'data.js';
+    const apiBase = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`;
+    const submitBtn = document.getElementById('modal-submit');
+    const originalBtnText = submitBtn.textContent;
+
+    try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Saving...';
+
+        // 1. Extract data from DOM
+        document.querySelectorAll('[data-path]').forEach(el => {
+            const path = el.dataset.path;
+            const value = (path.includes('detail') || path.includes('summary')) ? el.innerHTML : el.innerText;
+            setNestedValue(translations[currentLang], path, value.trim());
+        });
+
+        // 2. Serialize translations to string
+        const fileContent = `const translations = ${JSON.stringify(translations, null, 4)};`;
+
+        // 3. Get latest SHA
+        const getRes = await fetch(apiBase);
+        if (!getRes.ok) throw new Error('Failed to fetch file metadata');
+        const getJson = await getRes.json();
+        const sha = getJson.sha;
+
+        // 4. PUT update
+        const encoder = new TextEncoder();
+        const data = encoder.encode(fileContent);
+        const base64Content = btoa(String.fromCharCode(...data));
+
+        const putRes = await fetch(apiBase, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${pat}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: `Update resume content (${currentLang}) via inline editor`,
+                content: base64Content,
+                sha: sha
+            })
+        });
+
+        if (!putRes.ok) {
+            const errJson = await putRes.json();
+            throw new Error(errJson.message || 'Failed to save to GitHub');
+        }
+
+        alert('Changes saved successfully to GitHub!');
+        applyEditMode(false);
+        closeModal();
+    } catch (err) {
+        console.error(err);
+        alert(`Error: ${err.message}`);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+    }
+}
+
+// ── MODAL CONTROL ──
+const patModal = document.getElementById('pat-modal');
+const ghPatInput = document.getElementById('gh-pat');
+
+function openModal() { patModal.classList.add('show'); ghPatInput.focus(); }
+function closeModal() { patModal.classList.remove('show'); ghPatInput.value = ''; }
+
+document.getElementById('edit-toggle').addEventListener('click', () => {
+    if (isEditing) {
+        openModal();
+    } else {
+        applyEditMode(true);
+    }
+});
+
+document.getElementById('modal-cancel').addEventListener('click', closeModal);
+document.getElementById('modal-submit').addEventListener('click', () => {
+    const pat = ghPatInput.value.trim();
+    if (!pat) return alert('Please enter your Personal Access Token');
+    saveToGitHub(pat);
+});
+
+// Close modal on escape
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && patModal.classList.contains('show')) closeModal();
 });
 
 updateCV('en');

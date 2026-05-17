@@ -17,6 +17,14 @@
     <i class="fas fa-cog"></i>
   </button>
   
+  <button class="edit-toggle" id="edit-toggle" title="Edit Content">
+    <i class="fas fa-pencil-alt"></i>
+  </button>
+
+  <button class="discard-toggle" id="discard-toggle" title="Discard Changes" style="display: none;">
+    <i class="fas fa-times"></i>
+  </button>
+  
   <div class="controls-menu" id="controls-menu">
     <div class="control-group">
       <div class="control-label" id="lbl-language">Language</div>
@@ -50,6 +58,19 @@
   <aside class="sidebar" id="sidebar"></aside>
   <main class="main" id="main"></main>
 </div>
+<!-- PAT Modal -->
+<div class="modal-overlay" id="pat-modal">
+  <div class="modal-content">
+    <h3>GitHub Save</h3>
+    <p>Please enter your GitHub Personal Access Token to save changes to <strong>data.js</strong>.</p>
+    <input type="password" id="gh-pat" placeholder="ghp_xxxxxxxxxxxx">
+    <div class="modal-actions">
+      <button id="modal-cancel" class="btn-secondary">Cancel</button>
+      <button id="modal-submit" class="btn-primary">Save to GitHub</button>
+    </div>
+  </div>
+</div>
+
 <script src="data.js"></script>
 <script src="main.js"></script>
 </body>
