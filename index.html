@@ -1,77 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resume - Do Quang Huan</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - Do Quang Huan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="https://res.cloudinary.com/dpt7g5sxd/image/upload/v1779030108/My_Logo_Transparent_n1z9lr.png"
+    type="image/png">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="controls-wrapper">
-  <button class="controls-toggle" id="controls-toggle">
-    <i class="fas fa-cog"></i>
-  </button>
-  
-  <button class="edit-toggle" id="edit-toggle" title="Edit Content">
-    <i class="fas fa-pencil-alt"></i>
-  </button>
+  <div class="controls-wrapper">
+    <button class="controls-toggle" id="controls-toggle">
+      <i class="fas fa-cog"></i>
+    </button>
 
-  <button class="discard-toggle" id="discard-toggle" title="Discard Changes" style="display: none;">
-    <i class="fas fa-times"></i>
-  </button>
-  
-  <div class="controls-menu" id="controls-menu">
-    <div class="control-group">
-      <div class="control-label" id="lbl-language">Language</div>
-      <div class="lang-switch">
-        <button id="btn-vi">Vietnamese</button>
-        <button id="btn-en" class="active">English</button>
+    <button class="edit-toggle" id="edit-toggle" title="Edit Content">
+      <i class="fas fa-pencil-alt"></i>
+    </button>
+
+    <button class="discard-toggle" id="discard-toggle" title="Discard Changes" style="display: none;">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="controls-menu" id="controls-menu">
+      <div class="control-group">
+        <div class="control-label" id="lbl-language">Language</div>
+        <div class="lang-switch">
+          <button id="btn-vi">Vietnamese</button>
+          <button id="btn-en" class="active">English</button>
+        </div>
       </div>
-    </div>
 
-    <div class="control-group">
-      <div class="control-label" id="lbl-layout">Layout</div>
-      <div class="layout-switch">
-        <button data-layout="default" class="active" id="btn-layout-default"><i class="fas fa-columns"></i> Sidebar</button>
-        <button data-layout="modern" id="btn-layout-modern"><i class="fas fa-window-maximize"></i> Modern</button>
-        <button data-layout="compact" id="btn-layout-compact"><i class="fas fa-list"></i> Compact</button>
+      <div class="control-group">
+        <div class="control-label" id="lbl-layout">Layout</div>
+        <div class="layout-switch">
+          <button data-layout="default" class="active" id="btn-layout-default"><i class="fas fa-columns"></i>
+            Sidebar</button>
+          <button data-layout="modern" id="btn-layout-modern"><i class="fas fa-window-maximize"></i> Modern</button>
+          <button data-layout="compact" id="btn-layout-compact"><i class="fas fa-list"></i> Compact</button>
+        </div>
       </div>
-    </div>
 
-    <div class="control-group">
-      <div class="control-label" id="lbl-theme">Theme</div>
-      <div class="theme-switch">
-        <button id="theme-light"><i class="fas fa-sun"></i> Light</button>
-        <button id="theme-dark"><i class="fas fa-moon"></i> Dark</button>
-        <button id="theme-device" class="active"><i class="fas fa-desktop"></i> Device</button>
+      <div class="control-group">
+        <div class="control-label" id="lbl-theme">Theme</div>
+        <div class="theme-switch">
+          <button id="theme-light"><i class="fas fa-sun"></i> Light</button>
+          <button id="theme-dark"><i class="fas fa-moon"></i> Dark</button>
+          <button id="theme-device" class="active"><i class="fas fa-desktop"></i> Device</button>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
 
-<div class="cv-wrapper">
-  <aside class="sidebar" id="sidebar"></aside>
-  <main class="main" id="main"></main>
-</div>
-<!-- PAT Modal -->
-<div class="modal-overlay" id="pat-modal">
-  <div class="modal-content">
-    <h3>GitHub Save</h3>
-    <p>Please enter your GitHub Personal Access Token to save changes to <strong>data.js</strong>.</p>
-    <input type="password" id="gh-pat" placeholder="ghp_xxxxxxxxxxxx">
-    <div class="modal-actions">
-      <button id="modal-cancel" class="btn-secondary">Cancel</button>
-      <button id="modal-submit" class="btn-primary">Save to GitHub</button>
-    </div>
-  </div>
-</div>
+      <div class="control-group">
+        <div class="control-label" id="lbl-download">Download</div>
+        <div class="download-split-btn">
+          <button id="btn-download-pdf" class="btn-main">
+            <i class="fas fa-file-pdf"></i> PDF
+          </button>
+          <button class="btn-toggle" id="download-toggle">
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="download-menu" id="download-menu">
+            <button id="btn-download-jpg"><i class="fas fa-file-image"></i> JPG</button>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
 
-<script src="data.js"></script>
-<script src="main.js"></script>
-</body>
+      <div class="cv-wrapper">
+      <aside class="sidebar" id="sidebar"></aside>
+      <main class="main" id="main"></main>
+      </div>
+      <!-- PAT Modal -->
+      <div class="modal-overlay" id="pat-modal">
+      <div class="modal-content">
+      <h3>GitHub Save</h3>
+      <p>Please enter your GitHub Personal Access Token to save changes to <strong>data.js</strong>.</p>
+      <input type="password" id="gh-pat" placeholder="ghp_xxxxxxxxxxxx">
+      <div class="modal-actions">
+        <button id="modal-cancel" class="btn-secondary">Cancel</button>
+        <button id="modal-submit" class="btn-primary">Save to GitHub</button>
+      </div>
+      </div>
+      </div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+      <script type="module" src="main.js"></script></body>
+
 </html>

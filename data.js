@@ -1,9 +1,9 @@
-const translations = {
+export const translations = {
     "vi": {
         "name": "Đỗ Quang Huân",
         "title": "Backend Developer",
         "initials": "ĐH",
-        "image": "pf.jpg",
+        "image": "http://res.cloudinary.com/dpt7g5sxd/image/upload/v1779029686/20260517_215454_5c9d24c3-1239-44b9-b98b-3740de8a4ce8.jpg",
         "labels": {
             "contact": "Liên hệ",
             "education": "Học vấn",
@@ -142,7 +142,7 @@ const translations = {
         "name": "Do Quang Huan",
         "title": "BACKEND DEVELOPER",
         "initials": "DH",
-        "image": "pf.jpg",
+        "image": "http://res.cloudinary.com/dpt7g5sxd/image/upload/v1779029686/20260517_215454_5c9d24c3-1239-44b9-b98b-3740de8a4ce8.jpg",
         "labels": {
             "contact": "Contact",
             "education": "Education",

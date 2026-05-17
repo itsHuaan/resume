@@ -1,3 +1,5 @@
+import { translations } from './data.js';
+
 let currentLang = 'en';
 let currentLayout = 'default';
 let currentTheme = 'device';
@@ -95,9 +97,9 @@ function renderMain(data) {
 function updateCV(lang) {
     const wrapper = document.querySelector('.cv-wrapper');
     const isFirstLoad = !document.getElementById('sidebar').innerHTML.trim();
-    
+
     if (!isFirstLoad && currentLang === lang) return;
-    
+
     if (isFirstLoad) {
         renderContent(lang, false);
     } else {
@@ -111,7 +113,7 @@ function updateCV(lang) {
                     wrapper.classList.remove('switching');
                 });
             });
-        }, 300); 
+        }, 300);
     }
 }
 
@@ -120,7 +122,7 @@ function updateLayout(layout) {
     if (currentLayout === layout) return;
 
     currentLayout = layout;
-    
+
     document.querySelectorAll('.layout-switch button').forEach(btn => btn.classList.remove('active'));
     document.querySelector(`.layout-switch button[data-layout="${layout}"]`).classList.add('active');
 
@@ -132,7 +134,7 @@ function updateLayout(layout) {
         if (layout !== 'default') {
             wrapper.classList.add(`layout-${layout}`);
         }
-        
+
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 wrapper.classList.remove('switching');
@@ -175,32 +177,33 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () 
 function renderContent(lang, animateSections) {
     currentLang = lang;
     const data = translations[lang];
-    
+
     document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`btn-${lang}`).classList.add('active');
-    
+
     document.documentElement.lang = lang;
     document.title = lang === 'vi' ? `CV - ${data.name}` : `Resume - ${data.name}`;
-    
+
     // Translate Settings Menu
     document.getElementById('lbl-language').textContent = data.labels.settings.language;
     document.getElementById('lbl-layout').textContent = data.labels.settings.layout;
     document.getElementById('lbl-theme').textContent = data.labels.settings.theme;
-    
+    document.getElementById('lbl-download').textContent = lang === 'vi' ? 'Tải xuống' : 'Download';
+
     document.getElementById('btn-vi').textContent = data.labels.settings.languages.vi;
     document.getElementById('btn-en').textContent = data.labels.settings.languages.en;
-    
+
     document.getElementById('btn-layout-default').innerHTML = `<i class="fas fa-columns"></i> ${data.labels.settings.layouts.default}`;
     document.getElementById('btn-layout-modern').innerHTML = `<i class="fas fa-window-maximize"></i> ${data.labels.settings.layouts.modern}`;
     document.getElementById('btn-layout-compact').innerHTML = `<i class="fas fa-list"></i> ${data.labels.settings.layouts.compact}`;
-    
+
     document.getElementById('theme-light').innerHTML = `<i class="fas fa-sun"></i> ${data.labels.settings.themes.light}`;
     document.getElementById('theme-dark').innerHTML = `<i class="fas fa-moon"></i> ${data.labels.settings.themes.dark}`;
     document.getElementById('theme-device').innerHTML = `<i class="fas fa-desktop"></i> ${data.labels.settings.themes.device}`;
-    
+
     renderSidebar(data);
     renderMain(data);
-    
+
     if (animateSections) {
         document.querySelectorAll('.section, .sidebar-section, .profile-block').forEach((el, i) => {
             el.style.animationDelay = `${i * 0.05}s`;
@@ -220,6 +223,78 @@ document.getElementById('theme-light').addEventListener('click', () => updateThe
 document.getElementById('theme-dark').addEventListener('click', () => updateTheme('dark'));
 document.getElementById('theme-device').addEventListener('click', () => updateTheme('device'));
 
+// ── DOWNLOAD LOGIC ──
+async function downloadToJPG() {
+    const cv = document.querySelector('.cv-wrapper');
+    const controls = document.querySelector('.controls-wrapper');
+    
+    // Hide controls during capture
+    controls.style.display = 'none';
+    
+    try {
+        const canvas = await html2canvas(cv, {
+            useCORS: true,
+            scale: 2, // Standard scale
+            backgroundColor: currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'
+        });
+        
+        const link = document.createElement('a');
+        link.download = `Resume_${translations[currentLang].name.replace(/\s+/g, '_')}.jpg`;
+        link.href = canvas.toDataURL('image/jpeg', 0.9);
+        link.click();
+    } catch (err) {
+        console.error('Export failed:', err);
+        alert('Failed to generate JPG');
+    } finally {
+        controls.style.display = 'flex';
+    }
+}
+
+async function downloadToPDF() {
+    const cv = document.querySelector('.cv-wrapper');
+    const controls = document.querySelector('.controls-wrapper');
+    const { jsPDF } = window.jspdf;
+
+    controls.style.display = 'none';
+
+    try {
+        const canvas = await html2canvas(cv, {
+            useCORS: true,
+            scale: 2,
+            backgroundColor: currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'
+        });
+
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const pdf = new jsPDF({
+            orientation: canvas.width > canvas.height ? 'l' : 'p',
+            unit: 'px',
+            format: [canvas.width, canvas.height]
+        });
+
+        pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
+        pdf.save(`Resume_${translations[currentLang].name.replace(/\s+/g, '_')}.pdf`);
+    } catch (err) {
+        console.error('Export failed:', err);
+        alert('Failed to generate PDF');
+    } finally {
+        controls.style.display = 'flex';
+    }
+}
+
+document.getElementById('btn-download-pdf').addEventListener('click', downloadToPDF);
+document.getElementById('btn-download-jpg').addEventListener('click', () => {
+    downloadToJPG();
+    document.getElementById('download-menu').classList.remove('show');
+});
+
+const downloadToggle = document.getElementById('download-toggle');
+const downloadMenu = document.getElementById('download-menu');
+
+downloadToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    downloadMenu.classList.toggle('show');
+});
+
 // ── CONTROLS MENU TOGGLE ──
 const controlsToggle = document.getElementById('controls-toggle');
 const controlsMenu = document.getElementById('controls-menu');
@@ -228,13 +303,17 @@ controlsToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     controlsToggle.classList.toggle('active');
     controlsMenu.classList.toggle('show');
+    downloadMenu.classList.remove('show'); 
 });
 
-// Close menu when clicking outside
+// Close menus when clicking outside
 document.addEventListener('click', (e) => {
     if (!controlsToggle.contains(e.target) && !controlsMenu.contains(e.target)) {
         controlsToggle.classList.remove('active');
         controlsMenu.classList.remove('show');
+    }
+    if (!downloadToggle.contains(e.target) && !downloadMenu.contains(e.target)) {
+        downloadMenu.classList.remove('show');
     }
 });
 
@@ -245,7 +324,7 @@ function setNestedValue(obj, path, value) {
     const keys = path.split('.');
     let current = obj;
     for (let i = 0; i < keys.length - 1; i++) {
-        if (!current[keys[i]]) current[keys[i]] = isNaN(keys[i+1]) ? {} : [];
+        if (!current[keys[i]]) current[keys[i]] = isNaN(keys[i + 1]) ? {} : [];
         current = current[keys[i]];
     }
     current[keys[keys.length - 1]] = value;
@@ -257,14 +336,13 @@ function applyEditMode(enabled) {
     const editToggle = document.getElementById('edit-toggle');
     const discardToggle = document.getElementById('discard-toggle');
     const settingsToggle = document.getElementById('controls-toggle');
-    
+
     if (enabled) {
         document.body.classList.add('editing');
         editToggle.classList.add('active');
         editToggle.innerHTML = '<i class="fas fa-save"></i>';
         discardToggle.style.display = "flex";
         editableElements.forEach(el => el.contentEditable = "true");
-        // Disable settings to prevent data loss during edit
         settingsToggle.style.opacity = "0.5";
         settingsToggle.style.pointerEvents = "none";
         controlsMenu.classList.remove('show');
@@ -282,7 +360,7 @@ function applyEditMode(enabled) {
 document.getElementById('discard-toggle').addEventListener('click', () => {
     if (confirm('Discard all unsaved changes?')) {
         applyEditMode(false);
-        renderContent(currentLang, false); // Re-render from original data
+        renderContent(currentLang, false); 
     }
 });
 
@@ -298,23 +376,19 @@ async function saveToGitHub(pat) {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Saving...';
 
-        // 1. Extract data from DOM
         document.querySelectorAll('[data-path]').forEach(el => {
             const path = el.dataset.path;
             const value = (path.includes('detail') || path.includes('summary')) ? el.innerHTML : el.innerText;
             setNestedValue(translations[currentLang], path, value.trim());
         });
 
-        // 2. Serialize translations to string
-        const fileContent = `const translations = ${JSON.stringify(translations, null, 4)};`;
+        const fileContent = `export const translations = ${JSON.stringify(translations, null, 4)};`;
 
-        // 3. Get latest SHA
         const getRes = await fetch(apiBase);
         if (!getRes.ok) throw new Error('Failed to fetch file metadata');
         const getJson = await getRes.json();
         const sha = getJson.sha;
 
-        // 4. PUT update
         const encoder = new TextEncoder();
         const data = encoder.encode(fileContent);
         const base64Content = btoa(String.fromCharCode(...data));
@@ -371,7 +445,6 @@ document.getElementById('modal-submit').addEventListener('click', () => {
     saveToGitHub(pat);
 });
 
-// Close modal on escape
 window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && patModal.classList.contains('show')) closeModal();
 });
