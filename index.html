@@ -77,11 +77,14 @@
       </div>
 
       <div class="cv-wrapper">
-      <aside class="sidebar" id="sidebar"></aside>
-      <main class="main" id="main"></main>
+        <aside class="sidebar" id="sidebar"></aside>
+        <main class="main" id="main"></main>
       </div>
-      <!-- PAT Modal -->
-      <div class="modal-overlay" id="pat-modal">
+
+      <!-- Hidden A4 Canvas for Downloads -->
+      <div id="print-canvas" class="print-canvas" style="position: absolute; left: -9999px; top: -9999px;"></div>
+
+      <!-- PAT Modal -->      <div class="modal-overlay" id="pat-modal">
       <div class="modal-content">
       <h3>GitHub Save</h3>
       <p>Please enter your GitHub Personal Access Token to save changes to <strong>data.js</strong>.</p>

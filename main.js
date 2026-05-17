@@ -224,23 +224,108 @@ document.getElementById('theme-dark').addEventListener('click', () => updateThem
 document.getElementById('theme-device').addEventListener('click', () => updateTheme('device'));
 
 // ── DOWNLOAD LOGIC ──
+async function preparePrintCanvas() {
+    const printCanvas = document.getElementById('print-canvas');
+    const data = translations[currentLang];
+    
+    // Apply current theme to print canvas
+    let isDark = false;
+    if (currentTheme === 'dark') isDark = true;
+    else if (currentTheme === 'device') isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (isDark) printCanvas.classList.add('theme-dark');
+    else printCanvas.classList.remove('theme-dark');
+
+    // Clear and Clone structure from sidebar and main
+    printCanvas.innerHTML = `
+        <aside class="sidebar"></aside>
+        <main class="main"></main>
+    `;
+
+    const sidebar = printCanvas.querySelector('.sidebar');
+    const main = printCanvas.querySelector('.main');
+
+    // Sync Sidebar
+    const contacts = data.contact.map(c => `
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas ${c.icon}"></i></div>
+            <span>${c.text}</span>
+        </div>`).join('');
+
+    const educations = data.education.map(e => `
+        <div class="edu-item">
+            <div class="edu-time">${e.time}</div>
+            <div class="edu-school">${e.school}</div>
+            <div class="edu-detail">${e.detail}</div>
+        </div>`).join('');
+
+    const skills = data.skills.map(s => `
+        <div class="skill-group">
+            <span class="skill-category">${s.category}</span>
+            <div class="skill-tags">${s.items.map(item => `<span class="skill-tag">${item}</span>`).join('')}</div>
+        </div>`).join('');
+
+    sidebar.innerHTML = `
+        <div class="profile-block">
+            <div class="avatar-wrapper"><img src="${data.image}" crossorigin="anonymous" class="profile-img"></div>
+            <div class="profile-name">${data.name}</div>
+            <div class="profile-title">${data.title}</div>
+        </div>
+        <div class="sidebar-section"><div class="sidebar-heading">${data.labels.contact}</div>${contacts}</div>
+        <div class="sidebar-section"><div class="sidebar-heading">${data.labels.education}</div>${educations}</div>
+        <div class="sidebar-section"><div class="sidebar-heading">${data.labels.skills}</div>${skills}</div>
+    `;
+
+    // Sync Main
+    const projects = (list) => list.map(p => `
+        <div class="project-card">
+            ${p.name ? `<div class="project-name">${p.name}</div>` : ''}
+            ${p.desc ? `<div class="project-desc">${p.desc}</div>` : ''}
+            <ul class="task-list">${p.tasks.map(t => `<li>${t}</li>`).join('')}</ul>
+            ${p.tech ? `<div class="tech-badge">${p.tech}</div>` : ''}
+        </div>`).join('');
+
+    const experience = data.experience.map(e => `
+        <div class="exp-item">
+            <div class="exp-header"><div class="exp-company">${e.company}</div><div class="exp-time">${e.time}</div></div>
+            <div class="exp-role">${e.role}</div>
+            ${projects(e.projects)}
+        </div>`).join('');
+
+    main.innerHTML = `
+        <div class="section">
+            <div class="section-header"><div class="section-title">${data.labels.summary}</div><div class="section-rule"></div></div>
+            <p class="summary-text">${data.summary}</p>
+        </div>
+        <div class="section">
+            <div class="section-header"><div class="section-title">${data.labels.experience}</div><div class="section-rule"></div></div>
+            ${experience}
+        </div>
+    `;
+
+    return printCanvas;
+}
+
 async function downloadToJPG() {
-    const cv = document.querySelector('.cv-wrapper');
     const controls = document.querySelector('.controls-wrapper');
-    
-    // Hide controls during capture
     controls.style.display = 'none';
-    
+
     try {
-        const canvas = await html2canvas(cv, {
-            useCORS: true,
-            scale: 2, // Standard scale
-            backgroundColor: currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'
-        });
+        const canvasEl = await preparePrintCanvas();
+        const isDark = canvasEl.classList.contains('theme-dark');
         
+        const canvas = await html2canvas(canvasEl, {
+            useCORS: true,
+            scale: 3, 
+            backgroundColor: isDark ? '#1a1a1a' : '#ffffff',
+            logging: false,
+            width: 793.7, 
+            height: 1122.5
+        });
+
         const link = document.createElement('a');
         link.download = `Resume_${translations[currentLang].name.replace(/\s+/g, '_')}.jpg`;
-        link.href = canvas.toDataURL('image/jpeg', 0.9);
+        link.href = canvas.toDataURL('image/jpeg', 0.95);
         link.click();
     } catch (err) {
         console.error('Export failed:', err);
@@ -251,27 +336,29 @@ async function downloadToJPG() {
 }
 
 async function downloadToPDF() {
-    const cv = document.querySelector('.cv-wrapper');
     const controls = document.querySelector('.controls-wrapper');
     const { jsPDF } = window.jspdf;
-
     controls.style.display = 'none';
 
     try {
-        const canvas = await html2canvas(cv, {
+        const canvasEl = await preparePrintCanvas();
+        const isDark = canvasEl.classList.contains('theme-dark');
+
+        const canvas = await html2canvas(canvasEl, {
             useCORS: true,
-            scale: 2,
-            backgroundColor: currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'
+            scale: 3,
+            backgroundColor: isDark ? '#1a1a1a' : '#ffffff',
+            logging: false,
+            width: 793.7,
+            height: 1122.5
         });
 
         const imgData = canvas.toDataURL('image/jpeg', 1.0);
-        const pdf = new jsPDF({
-            orientation: canvas.width > canvas.height ? 'l' : 'p',
-            unit: 'px',
-            format: [canvas.width, canvas.height]
-        });
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
 
-        pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
+        pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
         pdf.save(`Resume_${translations[currentLang].name.replace(/\s+/g, '_')}.pdf`);
     } catch (err) {
         console.error('Export failed:', err);
@@ -280,7 +367,6 @@ async function downloadToPDF() {
         controls.style.display = 'flex';
     }
 }
-
 document.getElementById('btn-download-pdf').addEventListener('click', downloadToPDF);
 document.getElementById('btn-download-jpg').addEventListener('click', () => {
     downloadToJPG();
@@ -303,7 +389,7 @@ controlsToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     controlsToggle.classList.toggle('active');
     controlsMenu.classList.toggle('show');
-    downloadMenu.classList.remove('show'); 
+    downloadMenu.classList.remove('show');
 });
 
 // Close menus when clicking outside
@@ -360,7 +446,7 @@ function applyEditMode(enabled) {
 document.getElementById('discard-toggle').addEventListener('click', () => {
     if (confirm('Discard all unsaved changes?')) {
         applyEditMode(false);
-        renderContent(currentLang, false); 
+        renderContent(currentLang, false);
     }
 });
 
