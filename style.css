@@ -263,30 +263,87 @@ body {
 }
 
 /* 2. Compact Layout */
+@media (min-width: 901px) {
+    .cv-wrapper.layout-compact {
+        grid-template-columns: 240px 1fr;
+        max-width: 850px;
+    }
+}
+
 .cv-wrapper.layout-compact {
-    grid-template-columns: 260px 1fr;
-    max-width: 900px;
+    font-size: 13px;
 }
 
 .cv-wrapper.layout-compact .sidebar {
-    padding: 35px 25px;
+    padding: 30px 20px;
 }
 
 .cv-wrapper.layout-compact .avatar-wrapper {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+}
+
+.cv-wrapper.layout-compact .profile-name {
+    font-size: 20px;
 }
 
 .cv-wrapper.layout-compact .main {
-    padding: 35px 40px;
+    padding: 30px 35px;
 }
 
 .cv-wrapper.layout-compact .section {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+}
+
+.cv-wrapper.layout-compact .section-header {
+    margin-bottom: 15px;
+}
+
+.cv-wrapper.layout-compact .section-title {
+    font-size: 18px;
 }
 
 .cv-wrapper.layout-compact .exp-item {
+    margin-bottom: 20px;
+    padding-left: 15px;
+}
+
+.cv-wrapper.layout-compact .exp-company {
+    font-size: 16px;
+}
+
+.cv-wrapper.layout-compact .exp-role {
+    margin-bottom: 10px;
+}
+
+.cv-wrapper.layout-compact .task-list li {
+    font-size: 12.5px;
+    margin-bottom: 4px;
+}
+
+.cv-wrapper.layout-compact .project-card {
+    margin-bottom: 15px;
+}
+
+.cv-wrapper.layout-compact .sidebar-section {
     margin-bottom: 25px;
+}
+
+.cv-wrapper.layout-compact .sidebar-heading {
+    margin-bottom: 12px;
+}
+
+.cv-wrapper.layout-compact .skill-group {
+    margin-bottom: 12px;
+}
+
+.cv-wrapper.layout-compact .edu-item {
+    margin-bottom: 12px;
+}
+
+.cv-wrapper.layout-compact .summary-text {
+    font-size: 13.5px;
 }
 
 /* 3. Dark Theme */

@@ -12,12 +12,12 @@ const translations = {
             experience: "Kinh nghiệm làm việc",
             settings: {
                 language: "Ngôn ngữ",
-                layout: "Giao diện",
-                theme: "Chủ đề",
+                layout: "Bố cục",
+                theme: "Giao diện",
                 layouts: {
                     default: "Cột bên",
                     modern: "Hiện đại",
-                    compact: "Tối giản"
+                    compact: "Thu gọn"
                 },
                 themes: {
                     light: "Sáng",
