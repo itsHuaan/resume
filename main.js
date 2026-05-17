@@ -188,6 +188,8 @@ const translations = {
 };
 
 let currentLang = 'vi';
+let currentLayout = 'default';
+let currentTheme = 'device';
 
 // ── RENDER SIDEBAR ──
 function renderSidebar(data) {
@@ -302,6 +304,63 @@ function updateCV(lang) {
     }
 }
 
+function updateLayout(layout) {
+    const wrapper = document.querySelector('.cv-wrapper');
+    if (currentLayout === layout) return;
+
+    currentLayout = layout;
+    
+    document.querySelectorAll('.layout-switch button').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.layout-switch button[data-layout="${layout}"]`).classList.add('active');
+
+    wrapper.classList.add('switching');
+    setTimeout(() => {
+        // Remove old layout classes
+        wrapper.classList.remove('layout-modern', 'layout-compact');
+        // Add new layout class if not default
+        if (layout !== 'default') {
+            wrapper.classList.add(`layout-${layout}`);
+        }
+        
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                wrapper.classList.remove('switching');
+            });
+        });
+    }, 300);
+}
+
+function updateTheme(theme) {
+    currentTheme = theme;
+
+    document.querySelectorAll('.theme-switch button').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`theme-${theme}`).classList.add('active');
+
+    applyTheme();
+}
+
+function applyTheme() {
+    let shouldBeDark = false;
+    if (currentTheme === 'dark') {
+        shouldBeDark = true;
+    } else if (currentTheme === 'device') {
+        shouldBeDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    if (shouldBeDark) {
+        document.body.classList.add('theme-dark');
+        document.querySelector('.cv-wrapper').classList.add('theme-dark');
+    } else {
+        document.body.classList.remove('theme-dark');
+        document.querySelector('.cv-wrapper').classList.remove('theme-dark');
+    }
+}
+
+// Listen for system theme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (currentTheme === 'device') applyTheme();
+});
+
 function renderContent(lang, animateSections) {
     currentLang = lang;
     const data = translations[lang];
@@ -326,4 +385,31 @@ function renderContent(lang, animateSections) {
 document.getElementById('btn-vi').addEventListener('click', () => updateCV('vi'));
 document.getElementById('btn-en').addEventListener('click', () => updateCV('en'));
 
+document.querySelectorAll('.layout-switch button').forEach(btn => {
+    btn.addEventListener('click', () => updateLayout(btn.dataset.layout));
+});
+
+document.getElementById('theme-light').addEventListener('click', () => updateTheme('light'));
+document.getElementById('theme-dark').addEventListener('click', () => updateTheme('dark'));
+document.getElementById('theme-device').addEventListener('click', () => updateTheme('device'));
+
+// ── CONTROLS MENU TOGGLE ──
+const controlsToggle = document.getElementById('controls-toggle');
+const controlsMenu = document.getElementById('controls-menu');
+
+controlsToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    controlsToggle.classList.toggle('active');
+    controlsMenu.classList.toggle('show');
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!controlsToggle.contains(e.target) && !controlsMenu.contains(e.target)) {
+        controlsToggle.classList.remove('active');
+        controlsMenu.classList.remove('show');
+    }
+});
+
 updateCV('vi');
+applyTheme();

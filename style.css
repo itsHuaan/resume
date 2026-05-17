@@ -48,36 +48,285 @@ body {
     animation: slideUp 0.4s ease-out forwards;
 }
 
-/* ── LANGUAGE SWITCHER ── */
-.lang-switch {
+/* ── CONTROLS MENU ── */
+.controls-wrapper {
     position: fixed;
     top: 20px;
     right: 20px;
+    z-index: 1000;
     display: flex;
-    gap: 5px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.controls-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
     background: white;
-    padding: 4px;
-    border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 100;
-}
-
-.lang-switch button {
-    background: none;
     border: none;
-    padding: 6px 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--muted);
-    border-radius: 15px;
-    transition: all 0.2s;
+    color: var(--accent);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.lang-switch button.active {
+.controls-toggle:hover {
+    transform: rotate(45deg);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.controls-toggle.active {
     background: var(--brand);
     color: white;
+    transform: rotate(90deg);
+}
+
+.controls-menu {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 300px;
+    transform: scale(0.9) translateY(-10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top right;
+}
+
+.controls-menu.show {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.control-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.lang-switch, .layout-switch, .theme-switch {
+    display: flex;
+    gap: 4px;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 12px;
+}
+
+.lang-switch button, .layout-switch button, .theme-switch button {
+    background: none;
+    border: none;
+    padding: 8px 8px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #64748b;
+    border-radius: 8px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.lang-switch button.active, .layout-switch button.active, .theme-switch button.active {
+    background: white;
+    color: var(--brand);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Dark Mode Overrides for Controls */
+.theme-dark .controls-toggle {
+    background: #1e293b;
+    color: #94a3b8;
+}
+
+.theme-dark .controls-toggle.active {
+    background: var(--brand);
+    color: white;
+}
+
+.theme-dark .controls-menu {
+    background: #1e293b;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+.theme-dark .lang-switch, 
+.theme-dark .layout-switch, 
+.theme-dark .theme-switch {
+    background: #0f172a;
+}
+
+.theme-dark .lang-switch button,
+.theme-dark .layout-switch button,
+.theme-dark .theme-switch button {
+    color: #64748b;
+}
+
+.theme-dark .lang-switch button.active,
+.theme-dark .layout-switch button.active,
+.theme-dark .theme-switch button.active {
+    background: #1e293b;
+    color: white;
+}
+
+/* ── ALTERNATIVE LAYOUTS ── */
+
+/* 1. Modern Layout (Single Column) */
+.cv-wrapper.layout-modern {
+    display: block;
+    max-width: 850px;
+}
+
+.cv-wrapper.layout-modern .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 60px 50px 40px;
+}
+
+.cv-wrapper.layout-modern .sidebar-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.cv-wrapper.layout-modern .sidebar-heading {
+    display: none; /* Hide headings in top header for cleaner look */
+}
+
+.cv-wrapper.layout-modern .contact-item {
+    margin-bottom: 0;
+}
+
+.cv-wrapper.layout-modern .sidebar-section:has(.skill-group),
+.cv-wrapper.layout-modern .sidebar-section:has(.edu-item) {
+    display: block;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.cv-wrapper.layout-modern .sidebar-section:has(.skill-group) .sidebar-heading,
+.cv-wrapper.layout-modern .sidebar-section:has(.edu-item) .sidebar-heading {
+    display: flex;
+}
+
+/* 2. Compact Layout */
+.cv-wrapper.layout-compact {
+    grid-template-columns: 260px 1fr;
+    max-width: 900px;
+}
+
+.cv-wrapper.layout-compact .sidebar {
+    padding: 35px 25px;
+}
+
+.cv-wrapper.layout-compact .avatar-wrapper {
+    width: 120px;
+    height: 120px;
+}
+
+.cv-wrapper.layout-compact .main {
+    padding: 35px 40px;
+}
+
+.cv-wrapper.layout-compact .section {
+    margin-bottom: 30px;
+}
+
+.cv-wrapper.layout-compact .exp-item {
+    margin-bottom: 25px;
+}
+
+/* 3. Dark Theme */
+body.theme-dark {
+    background: #0f172a;
+}
+
+.cv-wrapper.theme-dark {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.theme-dark .sidebar {
+    background: #121212;
+    border-right: 1px solid #333;
+}
+
+.theme-dark .profile-name,
+.theme-dark .section-title,
+.theme-dark .exp-company,
+.theme-dark .project-name,
+.theme-dark .edu-school {
+    color: #ffffff;
+}
+
+.theme-dark .sidebar-heading,
+.theme-dark .contact-item,
+.theme-dark .summary-text,
+.theme-dark .exp-role,
+.theme-dark .task-list li,
+.theme-dark .skill-tag {
+    color: #bbb;
+}
+
+.theme-dark .sidebar-heading::after,
+.theme-dark .section-rule {
+    background: #333;
+}
+
+.theme-dark .exp-item {
+    border-left-color: #333;
+}
+
+.theme-dark .section-icon {
+    background: #252525;
+    border-color: #333;
+}
+
+.theme-dark .exp-time {
+    background: rgba(200, 82, 58, 0.15);
+    color: #ff8a71;
+}
+
+.theme-dark .tech-badge {
+    background: #252525;
+    color: #e0e0e0;
+    border: 1px solid #333;
+}
+
+.theme-dark .skill-tag {
+    background: #1a1a1a;
+    border-color: #333;
 }
 
 /* ── SIDEBAR ── */
