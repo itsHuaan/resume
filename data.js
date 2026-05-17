@@ -12,6 +12,10 @@ const translations = {
             experience: "Kinh nghiệm làm việc",
             settings: {
                 language: "Ngôn ngữ",
+                languages: {
+                    vi: "Tiếng Việt",
+                    en: "Tiếng Anh"
+                },
                 layout: "Bố cục",
                 theme: "Giao diện",
                 layouts: {
@@ -120,6 +124,10 @@ const translations = {
             experience: "Work Experience",
             settings: {
                 language: "Language",
+                languages: {
+                    vi: "Vietnamese",
+                    en: "English"
+                },
                 layout: "Layout",
                 theme: "Theme",
                 layouts: {

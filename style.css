@@ -20,6 +20,10 @@ body {
     color: var(--ink);
     line-height: 1.6;
     padding: 40px 20px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cv-wrapper {
@@ -474,6 +478,10 @@ body.theme-dark {
     margin-bottom: 35px;
 }
 
+.sidebar-section:last-child {
+    margin-bottom: 0;
+}
+
 .sidebar-heading {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -512,11 +520,15 @@ body.theme-dark {
 
 /* ── MAIN ── */
 .main {
-    padding: 50px 50px 60px;
+    padding: 50px 50px;
 }
 
 .section {
     margin-bottom: 45px;
+}
+
+.section:last-child {
+    margin-bottom: 0;
 }
 
 .section-header {

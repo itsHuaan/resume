@@ -187,6 +187,9 @@ function renderContent(lang, animateSections) {
     document.getElementById('lbl-layout').textContent = data.labels.settings.layout;
     document.getElementById('lbl-theme').textContent = data.labels.settings.theme;
     
+    document.getElementById('btn-vi').textContent = data.labels.settings.languages.vi;
+    document.getElementById('btn-en').textContent = data.labels.settings.languages.en;
+    
     document.getElementById('btn-layout-default').innerHTML = `<i class="fas fa-columns"></i> ${data.labels.settings.layouts.default}`;
     document.getElementById('btn-layout-modern').innerHTML = `<i class="fas fa-window-maximize"></i> ${data.labels.settings.layouts.modern}`;
     document.getElementById('btn-layout-compact').innerHTML = `<i class="fas fa-list"></i> ${data.labels.settings.layouts.compact}`;
