@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CV - Đỗ Quang Huân</title>
+<title>Resume - Do Quang Huan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -19,24 +19,24 @@
   
   <div class="controls-menu" id="controls-menu">
     <div class="control-group">
-      <div class="control-label">Language</div>
+      <div class="control-label" id="lbl-language">Language</div>
       <div class="lang-switch">
-        <button id="btn-vi" class="active">VI</button>
-        <button id="btn-en">EN</button>
+        <button id="btn-vi">VI</button>
+        <button id="btn-en" class="active">EN</button>
       </div>
     </div>
 
     <div class="control-group">
-      <div class="control-label">Layout</div>
+      <div class="control-label" id="lbl-layout">Layout</div>
       <div class="layout-switch">
-        <button data-layout="default" class="active"><i class="fas fa-columns"></i> Sidebar</button>
-        <button data-layout="modern"><i class="fas fa-window-maximize"></i> Modern</button>
-        <button data-layout="compact"><i class="fas fa-list"></i> Compact</button>
+        <button data-layout="default" class="active" id="btn-layout-default"><i class="fas fa-columns"></i> Sidebar</button>
+        <button data-layout="modern" id="btn-layout-modern"><i class="fas fa-window-maximize"></i> Modern</button>
+        <button data-layout="compact" id="btn-layout-compact"><i class="fas fa-list"></i> Compact</button>
       </div>
     </div>
 
     <div class="control-group">
-      <div class="control-label">Theme</div>
+      <div class="control-label" id="lbl-theme">Theme</div>
       <div class="theme-switch">
         <button id="theme-light"><i class="fas fa-sun"></i> Light</button>
         <button id="theme-dark"><i class="fas fa-moon"></i> Dark</button>

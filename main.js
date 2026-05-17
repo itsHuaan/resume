@@ -9,7 +9,22 @@ const translations = {
             education: "Học vấn",
             skills: "Kỹ năng",
             summary: "Tóm tắt chuyên môn",
-            experience: "Kinh nghiệm làm việc"
+            experience: "Kinh nghiệm làm việc",
+            settings: {
+                language: "Ngôn ngữ",
+                layout: "Giao diện",
+                theme: "Chủ đề",
+                layouts: {
+                    default: "Cột bên",
+                    modern: "Hiện đại",
+                    compact: "Tối giản"
+                },
+                themes: {
+                    light: "Sáng",
+                    dark: "Tối",
+                    device: "Hệ thống"
+                }
+            }
         },
         contact: [
             { icon: "fa-envelope", text: "doquanghuan1909@gmail.com" },
@@ -102,7 +117,22 @@ const translations = {
             education: "Education",
             skills: "Skills",
             summary: "About Me",
-            experience: "Work Experience"
+            experience: "Work Experience",
+            settings: {
+                language: "Language",
+                layout: "Layout",
+                theme: "Theme",
+                layouts: {
+                    default: "Sidebar",
+                    modern: "Modern",
+                    compact: "Compact"
+                },
+                themes: {
+                    light: "Light",
+                    dark: "Dark",
+                    device: "Device"
+                }
+            }
         },
         contact: [
             { icon: "fa-envelope", text: "doquanghuan1909@gmail.com" },
@@ -187,7 +217,7 @@ const translations = {
     }
 };
 
-let currentLang = 'vi';
+let currentLang = 'en';
 let currentLayout = 'default';
 let currentTheme = 'device';
 
@@ -371,6 +401,19 @@ function renderContent(lang, animateSections) {
     document.documentElement.lang = lang;
     document.title = lang === 'vi' ? `CV - ${data.name}` : `Resume - ${data.name}`;
     
+    // Translate Settings Menu
+    document.getElementById('lbl-language').textContent = data.labels.settings.language;
+    document.getElementById('lbl-layout').textContent = data.labels.settings.layout;
+    document.getElementById('lbl-theme').textContent = data.labels.settings.theme;
+    
+    document.getElementById('btn-layout-default').innerHTML = `<i class="fas fa-columns"></i> ${data.labels.settings.layouts.default}`;
+    document.getElementById('btn-layout-modern').innerHTML = `<i class="fas fa-window-maximize"></i> ${data.labels.settings.layouts.modern}`;
+    document.getElementById('btn-layout-compact').innerHTML = `<i class="fas fa-list"></i> ${data.labels.settings.layouts.compact}`;
+    
+    document.getElementById('theme-light').innerHTML = `<i class="fas fa-sun"></i> ${data.labels.settings.themes.light}`;
+    document.getElementById('theme-dark').innerHTML = `<i class="fas fa-moon"></i> ${data.labels.settings.themes.dark}`;
+    document.getElementById('theme-device').innerHTML = `<i class="fas fa-desktop"></i> ${data.labels.settings.themes.device}`;
+    
     renderSidebar(data);
     renderMain(data);
     
@@ -411,5 +454,5 @@ document.addEventListener('click', (e) => {
     }
 });
 
-updateCV('vi');
+updateCV('en');
 applyTheme();

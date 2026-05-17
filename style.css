@@ -51,12 +51,12 @@ body {
 /* ── CONTROLS MENU ── */
 .controls-wrapper {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    bottom: 20px;
+    left: 20px;
     z-index: 1000;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: column-reverse;
+    align-items: flex-start;
     gap: 10px;
 }
 
@@ -96,11 +96,11 @@ body {
     flex-direction: column;
     gap: 18px;
     width: 300px;
-    transform: scale(0.9) translateY(-10px);
+    transform: scale(0.9) translateY(10px);
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: top right;
+    transform-origin: bottom left;
 }
 
 .controls-menu.show {
@@ -203,35 +203,58 @@ body {
 .cv-wrapper.layout-modern .sidebar {
     border-right: none;
     border-bottom: 1px solid var(--rule);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     padding: 60px 50px 40px;
+}
+
+.cv-wrapper.layout-modern .profile-block {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .cv-wrapper.layout-modern .sidebar-section {
     width: 100%;
+    margin-bottom: 25px;
+}
+
+.cv-wrapper.layout-modern .sidebar-section:has(.contact-item) {
     display: flex;
     justify-content: center;
-    gap: 40px;
-    margin-bottom: 25px;
+    gap: 30px;
     flex-wrap: wrap;
 }
 
 .cv-wrapper.layout-modern .sidebar-heading {
-    display: none; /* Hide headings in top header for cleaner look */
+    display: none;
 }
 
 .cv-wrapper.layout-modern .contact-item {
     margin-bottom: 0;
 }
 
+/* Container for side-by-side sections in Modern layout */
+@media (min-width: 901px) {
+    .cv-wrapper.layout-modern .sidebar {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 0 40px;
+        text-align: left;
+    }
+
+    .cv-wrapper.layout-modern .profile-block,
+    .cv-wrapper.layout-modern .sidebar-section:has(.contact-item) {
+        grid-column: span 2;
+    }
+
+    .cv-wrapper.layout-modern .sidebar-section:has(.edu-item),
+    .cv-wrapper.layout-modern .sidebar-section:has(.skill-group) {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
 .cv-wrapper.layout-modern .sidebar-section:has(.skill-group),
 .cv-wrapper.layout-modern .sidebar-section:has(.edu-item) {
-    display: block;
     text-align: left;
-    margin-top: 20px;
 }
 
 .cv-wrapper.layout-modern .sidebar-section:has(.skill-group) .sidebar-heading,
