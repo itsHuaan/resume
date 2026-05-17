@@ -223,6 +223,17 @@ document.getElementById('theme-light').addEventListener('click', () => updateThe
 document.getElementById('theme-dark').addEventListener('click', () => updateTheme('dark'));
 document.getElementById('theme-device').addEventListener('click', () => updateTheme('device'));
 
+// Custom Alert Modal
+function showAlert(title, message) {
+    const alertModal = document.getElementById('alert-modal');
+    document.getElementById('alert-modal-title').textContent = title;
+    document.getElementById('alert-modal-desc').textContent = message;
+    alertModal.classList.add('show');
+}
+document.getElementById('alert-modal-close').addEventListener('click', () => {
+    document.getElementById('alert-modal').classList.remove('show');
+});
+
 // ── DOWNLOAD LOGIC ──
 async function preparePrintCanvas() {
     const printCanvas = document.getElementById('print-canvas');
@@ -329,7 +340,7 @@ async function downloadToJPG() {
         link.click();
     } catch (err) {
         console.error('Export failed:', err);
-        alert('Failed to generate JPG');
+        showAlert('Export Failed', 'Failed to generate JPG.');
     } finally {
         controls.style.display = 'flex';
     }
@@ -362,7 +373,7 @@ async function downloadToPDF() {
         pdf.save(`Resume_${translations[currentLang].name.replace(/\s+/g, '_')}.pdf`);
     } catch (err) {
         console.error('Export failed:', err);
-        alert('Failed to generate PDF');
+        showAlert('Export Failed', 'Failed to generate PDF.');
     } finally {
         controls.style.display = 'flex';
     }
@@ -519,12 +530,12 @@ async function saveToGitHub() {
             throw new Error(errJson.message || 'Failed to save to GitHub');
         }
 
-        alert('Changes saved successfully to GitHub!');
+        showAlert('Success', 'Changes saved successfully to GitHub!');
         applyEditMode(false);
         closeModal();
     } catch (err) {
         console.error(err);
-        alert(`Error: ${err.message}`);
+        showAlert('Error', err.message);
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = originalBtnText;
@@ -562,7 +573,7 @@ document.getElementById('edit-toggle').addEventListener('click', () => {
 document.getElementById('modal-cancel').addEventListener('click', closeModal);
 document.getElementById('modal-submit').addEventListener('click', async () => {
     const pat = ghPatInput.value.trim();
-    if (!pat) return alert('Please enter your Personal Access Token');
+    if (!pat) return showAlert('Notice', 'Please enter your Personal Access Token.');
 
     if (!isEditing) {
         submitBtn.disabled = true;
@@ -576,7 +587,7 @@ document.getElementById('modal-submit').addEventListener('click', async () => {
             closeModal();
             applyEditMode(true);
         } else {
-            alert('Invalid GitHub token. Please try again.');
+            showAlert('Authentication Failed', 'Invalid GitHub token. Please try again.');
         }
     } else {
         // This case handles saving if we needed to re-auth, 
