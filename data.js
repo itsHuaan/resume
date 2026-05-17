@@ -187,7 +187,7 @@ const translations = {
                 "text": "Hanoi, Vietnam"
             }
         ],
-        "summary": "Backend Developer specializing in the Java ecosystem (Spring Boot / WebFlux). Experienced in developing Microservices systems, focusing on optimizing API performance and asynchronous processing with Message Queue and Redis Caching. Proficient in database optimization and security standards. hello",
+        "summary": "Backend Developer specializing in the Java ecosystem (Spring Boot / WebFlux). Experienced in developing Microservices systems, focusing on optimizing API performance and asynchronous processing with Message Queue and Redis Caching. Proficient in database optimization and security standards.",
         "education": [
             {
                 "time": "2020 – 2024",
