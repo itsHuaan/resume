@@ -1380,6 +1380,30 @@ body.theme-dark {
     color: var(--muted);
 }
 
+.btn-danger {
+    background: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+}
+
+.theme-dark .btn-danger {
+    background: #f87171;
+}
+
+.theme-dark .btn-danger:hover {
+    background: #ef4444;
+}
+
 @media (max-width: 900px) {
     .cv-wrapper {
         grid-template-columns: 1fr;

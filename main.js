@@ -405,6 +405,7 @@ document.addEventListener('click', (e) => {
 
 // ── INLINE EDITOR LOGIC ──
 let isEditing = false;
+let validatedPAT = '';
 
 function setNestedValue(obj, path, value) {
     const keys = path.split('.');
@@ -440,17 +441,38 @@ function applyEditMode(enabled) {
         editableElements.forEach(el => el.contentEditable = "false");
         settingsToggle.style.opacity = "1";
         settingsToggle.style.pointerEvents = "auto";
+        if (!enabled) validatedPAT = ''; // Clear PAT on exit
     }
 }
 
+// Discard Modal Logic
+const discardModal = document.getElementById('discard-modal');
 document.getElementById('discard-toggle').addEventListener('click', () => {
-    if (confirm('Discard all unsaved changes?')) {
-        applyEditMode(false);
-        renderContent(currentLang, false);
-    }
+    discardModal.classList.add('show');
 });
 
-async function saveToGitHub(pat) {
+document.getElementById('discard-cancel').addEventListener('click', () => {
+    discardModal.classList.remove('show');
+});
+
+document.getElementById('discard-confirm').addEventListener('click', () => {
+    discardModal.classList.remove('show');
+    applyEditMode(false);
+    renderContent(currentLang, false);
+});
+
+async function validatePAT(pat) {
+    try {
+        const res = await fetch('https://api.github.com/user', {
+            headers: { 'Authorization': `token ${pat}` }
+        });
+        return res.ok;
+    } catch (err) {
+        return false;
+    }
+}
+
+async function saveToGitHub() {
     const repoOwner = 'itsHuaan';
     const repoName = 'resume';
     const filePath = 'data.js';
@@ -482,7 +504,7 @@ async function saveToGitHub(pat) {
         const putRes = await fetch(apiBase, {
             method: 'PUT',
             headers: {
-                'Authorization': `token ${pat}`,
+                'Authorization': `token ${validatedPAT}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -512,27 +534,62 @@ async function saveToGitHub(pat) {
 // ── MODAL CONTROL ──
 const patModal = document.getElementById('pat-modal');
 const ghPatInput = document.getElementById('gh-pat');
+const submitBtn = document.getElementById('modal-submit');
 
-function openModal() { patModal.classList.add('show'); ghPatInput.focus(); }
+function openModal() { 
+    patModal.classList.add('show'); 
+    ghPatInput.focus(); 
+    if (isEditing) {
+        document.getElementById('modal-title').textContent = 'Save Changes';
+        document.getElementById('modal-desc').textContent = 'Confirm your PAT to save changes to GitHub.';
+        submitBtn.textContent = 'Save to GitHub';
+    } else {
+        document.getElementById('modal-title').textContent = 'GitHub Authentication';
+        document.getElementById('modal-desc').textContent = 'Please enter your GitHub Personal Access Token to enable editing.';
+        submitBtn.textContent = 'Authenticate';
+    }
+}
 function closeModal() { patModal.classList.remove('show'); ghPatInput.value = ''; }
 
 document.getElementById('edit-toggle').addEventListener('click', () => {
     if (isEditing) {
-        openModal();
+        saveToGitHub(); // We already have the validatedPAT
     } else {
-        applyEditMode(true);
+        openModal();
     }
 });
 
 document.getElementById('modal-cancel').addEventListener('click', closeModal);
-document.getElementById('modal-submit').addEventListener('click', () => {
+document.getElementById('modal-submit').addEventListener('click', async () => {
     const pat = ghPatInput.value.trim();
     if (!pat) return alert('Please enter your Personal Access Token');
-    saveToGitHub(pat);
+
+    if (!isEditing) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Validating...';
+        const isValid = await validatePAT(pat);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Authenticate';
+
+        if (isValid) {
+            validatedPAT = pat;
+            closeModal();
+            applyEditMode(true);
+        } else {
+            alert('Invalid GitHub token. Please try again.');
+        }
+    } else {
+        // This case handles saving if we needed to re-auth, 
+        // but since we save validatedPAT, we just call the save function
+        saveToGitHub();
+    }
 });
 
 window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && patModal.classList.contains('show')) closeModal();
+    if (e.key === 'Escape') {
+        closeModal();
+        discardModal.classList.remove('show');
+    }
 });
 
 updateCV('en');

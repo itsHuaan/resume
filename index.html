@@ -84,16 +84,28 @@
       <!-- Hidden A4 Canvas for Downloads -->
       <div id="print-canvas" class="print-canvas" style="position: absolute; left: -9999px; top: -9999px;"></div>
 
-      <!-- PAT Modal -->      <div class="modal-overlay" id="pat-modal">
-      <div class="modal-content">
-      <h3>GitHub Save</h3>
-      <p>Please enter your GitHub Personal Access Token to save changes to <strong>data.js</strong>.</p>
-      <input type="password" id="gh-pat" placeholder="ghp_xxxxxxxxxxxx">
-      <div class="modal-actions">
-        <button id="modal-cancel" class="btn-secondary">Cancel</button>
-        <button id="modal-submit" class="btn-primary">Save to GitHub</button>
+      <!-- Modals -->
+      <div class="modal-overlay" id="pat-modal">
+        <div class="modal-content">
+          <h3 id="modal-title">GitHub Authentication</h3>
+          <p id="modal-desc">Please enter your GitHub Personal Access Token to enable editing and saving.</p>
+          <input type="password" id="gh-pat" placeholder="ghp_xxxxxxxxxxxx">
+          <div class="modal-actions">
+            <button id="modal-cancel" class="btn-secondary">Cancel</button>
+            <button id="modal-submit" class="btn-primary">Authenticate</button>
+          </div>
+        </div>
       </div>
-      </div>
+
+      <div class="modal-overlay" id="discard-modal">
+        <div class="modal-content">
+          <h3>Discard Changes?</h3>
+          <p>Are you sure you want to discard all unsaved changes? This action cannot be undone.</p>
+          <div class="modal-actions">
+            <button id="discard-cancel" class="btn-secondary">Keep Editing</button>
+            <button id="discard-confirm" class="btn-danger">Discard All</button>
+          </div>
+        </div>
       </div>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
